@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "localhost",
-    "*.herokuapp.com"
+    "titoli-server.herokuapp.com"
 ]
 
 
