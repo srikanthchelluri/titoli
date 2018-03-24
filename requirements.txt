@@ -1,7 +1,7 @@
 dj-database-url==0.5.0
 Django==2.0.3
 elasticsearch==6.2.0
-fuzzyset==0.0.11
+git+https://github.com/axiak/fuzzyset.git#egg=fuzzyset
 gunicorn==19.7.1
 psycopg2==2.7.4
 python-Levenshtein==0.12.0
