@@ -1,12 +1,17 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+import os
+import fuzzyset
 
 # Create your views here.
+
 #index the lines in all our subtitles once upon deploy
-directory = "../data"
+directory = os.path.dirname(os.path.realpath(__file__)) + "/../data"
 index = 0
 sets = {}
+print()
 for filename in os.listdir(directory):
-	subfile = open("../data/"+filename)
+	subfile = open(directory + "/" + filename)
 
 	fset = fuzzyset.FuzzySet()
 
@@ -28,7 +33,25 @@ for filename in os.listdir(directory):
 	sets[filename] = fset
 	
 
-def fuzzy_search(query):
+
+	
+
+def subs(request):
+	if request.method != "GET":
+		return JsonResponse({
+			"status": "error",
+			"data": "Use a GET request."
+		})
+
+	query = request.GET.get("query")
+	
 	for file in sets:
 		res = sets[file].get(query)
-		print(res)
+		
+
+	return JsonResponse({
+		"status": "success",
+		"data": res
+	})
+
+	
