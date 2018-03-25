@@ -102,6 +102,7 @@ def files(request):
 				time_raw = line.split(" --> ")
 				current["start"] = convert(time_raw[0])
 				current["end"] = convert(time_raw[1])
+				continue
 			elif line == "":
 				count = -1
 				print(current)
@@ -109,13 +110,14 @@ def files(request):
 				print()
 				data.append(current)
 				current = {"lines": []}
+				index_count += 1
 				continue
 			else:
 				current["lines"].append(line)
 				if targetLine == line:
 					index = index_count
-				else:
-					index_count += 1
+				
+					
 
 		if index == None:
 			return JsonResponse({
