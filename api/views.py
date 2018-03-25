@@ -11,6 +11,8 @@ directory = os.path.dirname(os.path.realpath(__file__)) + "/../data"
 index = 0
 sets = {}
 for filename in os.listdir(directory):
+	if filename[0] == ".":
+		continue
 	subfile = open(directory + "/" + filename)
 	fset = fuzzyset.FuzzySet()
 	count = -1
