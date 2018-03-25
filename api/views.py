@@ -112,7 +112,7 @@ def files(request):
 				if targetLine == line:
 					index = index_count
 				else:
-					index_count += 1s
+					index_count += 1
 
 		return JsonResponse({
 			"status": "success",
