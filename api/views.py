@@ -119,5 +119,5 @@ def convert(string):
 	min = int(string[3:5])
 	sec = int(string[6:8])
 	mil = int(string[9:])
-	return mil + sec * 1000 * min * 60 * 1000 + hour * 3600 * 1000
+	return mil + sec * 1000 + min * 60 * 1000 + hour * 3600 * 1000
 
