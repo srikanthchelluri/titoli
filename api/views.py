@@ -83,13 +83,41 @@ def files(request):
 
 	filename = request.GET.get("filename")
 
+	data = []
 	file_path = directory + "/" + filename
 	with open(file_path, 'r') as f:
-		data = f.read()
-		print(data)
+		current = {"line": []}
+		count = -1
+		for line in f:
+			count += 1
+			line = line.strip()
+			if count == 0:
+				continue
+			elif count == 1:
+				time_raw = line.split(" --> ")
+				current["start"] = convert(time_raw[0])
+				current["end"] = convert(time_raw[1])
+			elif line == "":
+				count = -1
+				print(current)
+				print()
+				print()
+				data.append(current)
+				current = {"line": []}
+				continue
+			else:
+				current["line"].append(line)
 
-		response = HttpResponse(data, content_type=mimetypes.guess_type(file_path)[0])
-		response['Content-Disposition'] = "attachment; filename={0}".format(filename)
-		response['Content-Length'] = os.path.getsize(file_path)
-		return response
+		return JsonResponse({
+			"status": "success",
+			"data": data
+		})
+
+def convert(string):
+	# 00:00:39,444
+	hour = int(string[0:1])
+	min = int(string[3:4])
+	sec = int(string[6:7])
+	mil = int(string[9:])
+	return mil + sec * 1000 * min * 60 * 1000 + hour * 3600 * 1000
 
