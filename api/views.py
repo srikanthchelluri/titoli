@@ -92,6 +92,7 @@ def files(request):
 		current = {"lines": []}
 		count = -1
 		index_count = 0
+
 		for line in f:
 			count += 1
 			line = line.strip()
@@ -115,6 +116,12 @@ def files(request):
 					index = index_count
 				else:
 					index_count += 1
+
+		if index == None:
+			return JsonResponse({
+				"status": "error",
+				"data": "targetLine not an exact match"
+				})
 
 		return JsonResponse({
 			"status": "success",
