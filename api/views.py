@@ -82,12 +82,14 @@ def files(request):
 		})
 
 	filename = request.GET.get("filename")
+	targetLine = request.GET.get("targetLine")
 
 	data = []
 	file_path = directory + "/" + filename
 	with open(file_path, 'r') as f:
 		current = {"line": []}
 		count = -1
+		index_count = 0
 		for line in f:
 			count += 1
 			line = line.strip()
@@ -107,10 +109,14 @@ def files(request):
 				continue
 			else:
 				current["line"].append(line)
+				if targetLine == line:
+					index = index_count
+				else:
+					index_count += 1
 
 		return JsonResponse({
 			"status": "success",
-			"data": data
+			"data": {"array": data, "index":index}
 		})
 
 def convert(string):
