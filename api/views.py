@@ -4,7 +4,7 @@ import os, mimetypes
 import fuzzyset
 
 THRESHOLD = 0.3
-DIFFERENCE_THRESHOLD = .05
+DIFFERENCE_THRESHOLD = 0
 
 # Index the lines in all our subtitles once upon deploy
 directory = os.path.dirname(os.path.realpath(__file__)) + "/../data"
@@ -46,6 +46,8 @@ def subs(request):
 		if accurate == None:
 			accurate = sets[file].get(query)[0]
 			accurate_file = file
+			second_accurate = sets[file].get(query)[0]
+			second_file = file
 		else:
 			current = sets[file].get(query)[0]
 			current_file = file
