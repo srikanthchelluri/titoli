@@ -115,9 +115,9 @@ def files(request):
 
 def convert(string):
 	# 00:00:39,444
-	hour = int(string[0:1])
-	min = int(string[3:4])
-	sec = int(string[6:7])
+	hour = int(string[0:2])
+	min = int(string[3:5])
+	sec = int(string[6:8])
 	mil = int(string[9:])
 	return mil + sec * 1000 * min * 60 * 1000 + hour * 3600 * 1000
 
