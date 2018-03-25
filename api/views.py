@@ -86,7 +86,7 @@ def files(request):
 	data = []
 	file_path = directory + "/" + filename
 	with open(file_path, 'r') as f:
-		current = {"line": []}
+		current = {"lines": []}
 		count = -1
 		for line in f:
 			count += 1
@@ -103,10 +103,10 @@ def files(request):
 				print()
 				print()
 				data.append(current)
-				current = {"line": []}
+				current = {"lines": []}
 				continue
 			else:
-				current["line"].append(line)
+				current["lines"].append(line)
 
 		return JsonResponse({
 			"status": "success",
