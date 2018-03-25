@@ -4,12 +4,15 @@ import os, mimetypes
 import fuzzyset
 
 THRESHOLD = 0.3
+DIFFERENCE_THRESHOLD = .05
 
 # Index the lines in all our subtitles once upon deploy
 directory = os.path.dirname(os.path.realpath(__file__)) + "/../data"
 index = 0
 sets = {}
 for filename in os.listdir(directory):
+	if filename[0] == ".":
+		continue
 	subfile = open(directory + "/" + filename)
 	fset = fuzzyset.FuzzySet()
 	count = -1
@@ -37,6 +40,8 @@ def subs(request):
 	
 	accurate = None
 	accurate_file = None
+	second_accurate = None
+	second_file = None
 	for file in sets:
 		if accurate == None:
 			accurate = sets[file].get(query)[0]
@@ -45,10 +50,12 @@ def subs(request):
 			current = sets[file].get(query)[0]
 			current_file = file
 			if current[0] > accurate[0]:
+				second_accurate = accurate
+				second_file = accurate_file
 				accurate = current
 				accurate_file = current_file
 	
-	if accurate[0] < THRESHOLD:
+	if accurate[0] < THRESHOLD or (accurate[0] - second_accurate[0]) < DIFFERENCE_THRESHOLD:
 		return JsonResponse({
 			"status": "error",
 			"data": {
