@@ -1,5 +1,5 @@
 dj-database-url==0.5.0
-Django==2.0.3
+Django==2.2.24
 elasticsearch==6.2.0
 git+https://github.com/axiak/fuzzyset.git#egg=fuzzyset
 gunicorn==19.7.1
